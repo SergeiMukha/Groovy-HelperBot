@@ -6,7 +6,9 @@ const { getCurrentWeather, getTomorrowWeatherForecast, setWeatherInterval, getWe
 const { WeatherScenes } = require('./scenes')
 const { menuKeyboard } = require('./keyboards')
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const { URL, PORT, BOT_TOKEN } = process.env
+
+const bot = new Telegraf(BOT_TOKEN)
 bot.context.db = {}
 
 const currentScene = new WeatherScenes
@@ -48,5 +50,8 @@ const setUpBot = () => {
 }
 
 module.exports = {
-    setUpBot
+    setUpBot,
+    URL,
+    PORT,
+    BOT_TOKEN
 }
