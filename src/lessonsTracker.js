@@ -4,7 +4,7 @@ function startLessonsTracking(ctx, next) {
 
         ctx.db.working = true
 
-        const lessons = require('./lessons.json')
+        const lessons = require('../lessons.json')
 
         setInterval(() => {
 
