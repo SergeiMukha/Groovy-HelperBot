@@ -1,10 +1,10 @@
 const { getCurrentWeatherData, getForecastWeatherData, getTomorrowAverageTemperature, getTomorrowTemperature } = require('./weatherApi')
 
 function setWeatherInterval(ctx) {
-    
+
     if (!ctx.session.location) {
 
-        ctx.reply('First you have to set location\nUse /set_location to do it')
+        ctx.reply('First you have to set location\nPress "Set Location" button to do it')
 
     } else {
 
@@ -28,7 +28,7 @@ function getCurrentWeather(ctx) {
 
     if (!ctx.session.location) {
 
-        ctx.reply('First you have to set location\nUse /set_location to do it')
+        ctx.reply('First you have to set location\nPress "Set Location" button to do it')
 
     } else {
 
@@ -46,7 +46,7 @@ function getTomorrowWeatherForecast(ctx) {
 
     if (!ctx.session.location) {
 
-        ctx.reply('First you have to set location\nUse /set_location to do it')
+        ctx.reply('First you have to set location\nPress "Set Location" button to do it')
 
     } else {
 
@@ -63,7 +63,7 @@ function getWeatherForecastForTimes(ctx) {
 
     if (!ctx.session.location) {
 
-        ctx.reply('First you have to set location\nUse /set_location to do it')
+        ctx.reply('First you have to set location\nPress "Set Location" button to do it')
 
     } else {
 
