@@ -27,8 +27,6 @@ const setUpBot = () => {
         ctx.reply("Hi! I'm Groovy! Your helper bot :)", menuKeyboard)
     })
 
-    bot.command('test', ctx => ctx.reply('Working!'))
-
     // Set Lessons Tracker Command
     bot.hears('Start Lessons Tracker', startLessonsTracking)
 
