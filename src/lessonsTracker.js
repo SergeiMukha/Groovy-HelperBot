@@ -4,9 +4,9 @@ function startLessonsTracking(ctx, next) {
 
         ctx.db.working = true
 
-        const lessons = require('../lessons.json')
-
         setInterval(() => {
+
+            const lessons = require('../lessons.json')
 
             var date = new Date()
 
@@ -17,8 +17,12 @@ function startLessonsTracking(ctx, next) {
                 var time = `${date.getHours()}:${date.getMinutes()}`
 
                 var timecodes = Object.keys(lessons[`${day}`])
+
+                console.log(time, timecodes)
         
                 if ( timecodes.includes(time) ) {
+
+                    console.log('OK')
         
                     var subject = lessons[`${day}`][time]
         
