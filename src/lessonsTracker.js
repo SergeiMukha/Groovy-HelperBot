@@ -1,3 +1,5 @@
+const { pool } = require("./db")
+
 function startLessonsTracking(ctx, next) {
 
     if ( !ctx.db.working ) {
@@ -6,26 +8,32 @@ function startLessonsTracking(ctx, next) {
 
         setInterval(() => {
 
-            const lessons = require('../lessons.json')
-
             var date = new Date()
 
-            var day = Number(date.getDay())
+            var day = date.getDay()
 
-            if ( Object.keys(lessons).includes(String(day)) ) {
+            console.log(day)
+
+            const lessons = pool.query(`SELECT * FROM lessons WHERE day=${day};`).then(res => {
+                res = res.rows
+
+                if (res) {
                 
-                var time = `${date.getHours()}:${date.getMinutes()}`
+                    var time = `${date.getHours()}:${date.getMinutes()}`
+        
+                    for (lesson of res) {
+                
+                        if ( time == lesson['time'] ) {
+                
+                            var subject = lesson['lesson']
+                
+                            ctx.reply(`Your subject is ${subject}`)
 
-                var timecodes = Object.keys(lessons[`${day}`])
-        
-                if ( timecodes.includes(time) ) {
-        
-                    var subject = lessons[`${day}`][time]
-        
-                    ctx.reply(`Your subject is ${subject}`)
+                            break
+                        }
+                    }
                 }
-
-            }
+            })
 
         }, 60000)
 

@@ -5,11 +5,7 @@ const { startLessonsTracking } = require('./lessonsTracker')
 const { getCurrentWeather, getTomorrowWeatherForecast, setWeatherInterval, getWeatherForecastForTimes } = require('./weatherCommands')
 const { WeatherScenes } = require('./scenes')
 const { menuKeyboard } = require('./keyboards')
-
-const { BOT_TOKEN } = process.env
-
-const bot = new Telegraf(BOT_TOKEN)
-bot.context.db = {}
+const { pool } = require('./db')
 
 const currentScene = new WeatherScenes
 const locationScene = currentScene.GenLocationScene
@@ -18,13 +14,17 @@ const changeTimeScene = currentScene.GenChangeTimeScene
 
 const stage = new Stage([locationScene(), startWeatherTrackingScene(), changeTimeScene()])
 
-const setUpBot = () => {
+const setUpBot = (BOT_TOKEN) => {
+    
+    const bot = new Telegraf(BOT_TOKEN)
+    bot.context.db = {}
     
     bot.use(session())
     bot.use(stage.middleware())
 
-    bot.start(ctx => {
-        ctx.reply("Hi! I'm Groovy! Your helper bot :)", menuKeyboard)
+    bot.start(async (ctx) => {
+        await ctx.reply("Hi! I'm Groovy! Your helper bot :)", menuKeyboard)
+        await pool.query(`INSERT INTO users(id, username) VALUES (${Number(ctx.message.chat.id)}, '${ctx.message.from.first_name}');`).catch(err => console.log(err.message))
     })
 
     // Set Lessons Tracker Command
